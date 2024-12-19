@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-4">
+    <h1 class="mb-4">Estadísticas de Ventas</h1>
+    
+    <!-- Resumen de Métricas -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-3">
+            <div class="card bg-primary bg-opacity-10">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="bi bi-cash me-2"></i>Ventas Totales
+                    </h5>
+                    <p class="card-text" id="totalSales">Cargando...</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-success bg-opacity-10">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="bi bi-bag me-2"></i>Pedidos
+                    </h5>
+                    <p class="card-text" id="orderCount">Cargando...</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-info bg-opacity-10">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="bi bi-calculator me-2"></i>Promedio por Pedido
+                    </h5>
+                    <p class="card-text" id="avgOrderValue">Cargando...</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-warning bg-opacity-10">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="bi bi-clock me-2"></i>Última Actualización
+                    </h5>
+                    <p class="card-text" id="lastUpdate">Cargando...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- Gráfico de Ventas -->
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Ventas por Hora</h5>
+                    <canvas id="salesChart"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Productos más Vendidos -->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Productos más Vendidos</h5>
+                    <div id="popularProducts">
+                        <p class="text-center text-muted">Cargando...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Ventas por Categoría -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Ventas por Categoría</h5>
+                    <canvas id="categorySalesChart"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Horas Pico -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Horas Pico</h5>
+                    <canvas id="peakHoursChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-end mt-4">
+        <button class="btn btn-primary" onclick="regenerateStats()">
+            <i class="bi bi-arrow-clockwise me-2"></i>Regenerar Estadísticas
+        </button>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ url_for('static', filename='js/admin/stats.js') }}"></script>
+{% endblock %}

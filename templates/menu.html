@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row g-4">
+    <div class="col-12" style="padding-block-start: 40px; padding-block-end: 10px;">
+        <div class="menu-categories">
+            <button class="btn btn-lg btn-outline-primary active rounded-pill" data-category="all">
+                <i class="bi bi-grid-fill me-2"></i>Todo el Menú
+            </button>
+            <button class="btn btn-lg btn-outline-primary rounded-pill" data-category="burgers">
+                <i class="bi bi-egg-fried me-2"></i>Hamburguesas
+            </button>
+            <button class="btn btn-lg btn-outline-primary rounded-pill" data-category="sides">
+                <i class="bi bi-box2-heart me-2"></i>Complementos
+            </button>
+            <button class="btn btn-lg btn-outline-primary rounded-pill" data-category="drinks">
+                <i class="bi bi-cup-straw me-2"></i>Bebidas
+            </button>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <div class="row g-4" id="menu-items">
+            <!-- Menu items will be dynamically loaded here -->
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card sticky-top" style="top: 1.8rem;">
+            <div class="card-header bg-dark text-white">
+                <h3 class="mb-0">
+                    <i class="bi bi-cart3 me-2"></i>Tu Pedido
+                </h3>
+            </div>
+            <div class="card-body">
+                <div id="cart-items" class="mb-4">
+                    <p class="text-muted text-center">Tu carrito está vacío</p>
+                </div>
+                <div class="border-top pt-3">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-muted">Subtotal:</span>
+                        <span id="cart-subtotal" class="fw-bold">$0.00</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-3">
+                        <span class="text-muted">Total:</span>
+                        <span id="cart-total" class="h4 mb-0">$0.00</span>
+                    </div>
+                    <button class="btn btn-primary btn-lg w-100 mt-3" id="checkout-btn" disabled>
+                        <i class="bi bi-bag-check me-2"></i>Realizar Pedido
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Personalización -->
+<div class="modal" id="customizeModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Personaliza tu Hamburguesa</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="customize-form">
+                    <div class="mb-3">
+                        <label class="form-label">Punto de cocción</label>
+                        <select class="form-select" name="cooking">
+                            <option value="medium">Término medio</option>
+                            <option value="medium-rare">Medio rojo</option>
+                            <option value="well-done">Bien cocido</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Extras</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="extras" value="cheese" id="extraCheese">
+                            <label class="form-check-label" for="extraCheese">Queso extra (+$50)</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="extras" value="bacon" id="extraBacon">
+                            <label class="form-check-label" for="extraBacon">Tocino (+$80)</label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Instrucciones especiales</label>
+                        <textarea class="form-control" name="instructions" rows="2" 
+                            placeholder="Ej: Sin cebolla, extra lechuga..."></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="addToCartBtn" onclick="hiddenModal()">
+                    <i class="bi bi-cart-plus me-2"></i>Añadir al Carrito
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/menu.js') }}"></script>
+<script src="{{ url_for('static', filename='js/cart.js') }}"></script>
+{% endblock %}

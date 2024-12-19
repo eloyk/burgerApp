@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-4">
+    <h1 class="mb-4">Panel de Administración</h1>
+    
+    <div class="row g-4">
+        <!-- Productos -->
+        <div class="col-md-6 col-lg-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="bi bi-box-seam me-2"></i>Productos
+                    </h5>
+                    <p class="card-text">Gestiona el catálogo de productos</p>
+                    <a href="{{ url_for('admin_products') }}" class="btn btn-primary">
+                        Administrar
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Inventario -->
+        <div class="col-md-6 col-lg-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="bi bi-clipboard-data me-2"></i>Inventario
+                    </h5>
+                    <p class="card-text">Control de stock e ingredientes</p>
+                    <a href="{{ url_for('admin_inventory') }}" class="btn btn-primary">
+                        Administrar
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Estadísticas -->
+        <div class="col-md-6 col-lg-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="bi bi-graph-up me-2"></i>Estadísticas
+                    </h5>
+                    <p class="card-text">Reportes y análisis de ventas</p>
+                    <a href="{{ url_for('admin_stats') }}" class="btn btn-primary">
+                        Ver Reportes
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Categorías -->
+        <div class="col-md-6 col-lg-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="bi bi-tags me-2"></i>Categorías
+                    </h5>
+                    <p class="card-text">Gestión de categorías de productos</p>
+                    <a href="{{ url_for('admin_categories') }}" class="btn btn-primary">
+                        Administrar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

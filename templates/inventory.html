@@ -1,0 +1,202 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2 class="mb-4">
+        <i class="bi bi-box-seam me-2"></i>
+        Gestión de Inventario
+    </h2>
+
+    <!-- Resumen de Inventario -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h6 class="card-subtitle mb-2 text-muted">
+                        <i class="bi bi-exclamation-triangle me-2"></i>Stock Bajo
+                    </h6>
+                    <h3 class="card-title mb-0" id="low-stock-count">0</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h6 class="card-subtitle mb-2 text-muted">
+                        <i class="bi bi-boxes me-2"></i>Total Productos
+                    </h6>
+                    <h3 class="card-title mb-0" id="total-products">0</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h6 class="card-subtitle mb-2 text-muted">
+                        <i class="bi bi-arrow-repeat me-2"></i>Última Actualización
+                    </h6>
+                    <h3 class="card-title mb-0" id="last-update">-</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gestión de Inventario -->
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Inventario Actual</h5>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addItemModal">
+                <i class="bi bi-plus-circle me-2"></i>Añadir Item
+            </button>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover" id="inventory-table">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Categoría</th>
+                            <th>Cantidad</th>
+                            <th>Unidad</th>
+                            <th>Stock Mínimo</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- El contenido se cargará dinámicamente -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Productos y sus Ingredientes -->
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Productos e Ingredientes</h5>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addIngredientModal">
+                <i class="bi bi-plus-circle me-2"></i>Asignar Ingredientes
+            </button>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover" id="products-table">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Ingredientes</th>
+                            <th>Stock Actual</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- El contenido se cargará dinámicamente -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para Añadir Item -->
+<div class="modal fade" id="addItemModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Añadir Item al Inventario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="add-item-form">
+                    <div class="mb-3">
+                        <label class="form-label">Nombre</label>
+                        <input type="text" class="form-control" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Categoría</label>
+                        <input type="text" class="form-control" name="category" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Cantidad</label>
+                        <input type="number" step="0.01" class="form-control" name="quantity" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Unidad</label>
+                        <select class="form-select" name="unit" required>
+                            <option value="unidad">Unidad</option>
+                            <option value="kg">Kilogramos</option>
+                            <option value="g">Gramos</option>
+                            <option value="l">Litros</option>
+                            <option value="ml">Mililitros</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Stock Mínimo</label>
+                        <input type="number" step="0.01" class="form-control" name="minimum_stock" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="save-item">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para Asignar Ingredientes -->
+<div class="modal fade" id="addIngredientModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Asignar Ingredientes a Producto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="assign-ingredient-form">
+                    <div class="mb-3">
+                        <label class="form-label">Producto</label>
+                        <select class="form-select" name="product_id" required>
+                            <!-- Se cargará dinámicamente -->
+                        </select>
+                    </div>
+                    <div id="ingredients-container">
+                        <div class="ingredient-entry mb-3">
+                            <div class="row">
+                                <div class="col-6">
+                                    <label class="form-label">Ingrediente</label>
+                                    <select class="form-select ingredient-select" required>
+                                        <!-- Se cargará dinámicamente -->
+                                    </select>
+                                </div>
+                                <div class="col-4">
+                                    <label class="form-label">Cantidad</label>
+                                    <input type="number" step="0.01" class="form-control quantity-input" required>
+                                </div>
+                                <div class="col-2 d-flex align-items-end">
+                                    <button type="button" class="btn btn-danger remove-ingredient">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-secondary" id="add-ingredient-row">
+                        <i class="bi bi-plus-circle me-2"></i>Añadir Ingrediente
+                    </button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="save-ingredients">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/inventory.js') }}"></script>
+{% endblock %}
